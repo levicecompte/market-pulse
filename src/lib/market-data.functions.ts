@@ -342,7 +342,7 @@ async function getCandidates() {
 
 async function fetchYahooSpark(symbols: string[]) {
   const payloads = await Promise.all(
-    chunk(symbols, 50).map(async (symbolChunk) => {
+    chunk(symbols, 20).map(async (symbolChunk) => {
       const params = new URLSearchParams({
         symbols: symbolChunk.join(","),
         range: "1mo",
