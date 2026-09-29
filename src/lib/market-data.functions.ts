@@ -450,7 +450,7 @@ async function loadMarketData(): Promise<MarketDataResponse> {
       rangeLabel: formatRangeLabel(startDate, now),
       trackedCount: 0,
       assets: [],
-      stats: { best: null, worstTop100: null, averageTop100: null },
+      stats: { best: null, worst: null, average: null },
     };
   }
 }

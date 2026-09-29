@@ -61,13 +61,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Classement live des 100 actions et ETFs les plus performants depuis le début du mois.",
+          "Classement live des 20 actions et ETFs les plus performants depuis le début du mois.",
       },
-      { property: "og:title", content: "TOP 100 PERFORMERS - MTD" },
+      { property: "og:title", content: "TOP 20 PERFORMERS - MTD" },
       {
         property: "og:description",
         content:
-          "Classement live des 100 actions et ETFs les plus performants depuis le début du mois.",
+          "Classement live des 20 actions et ETFs les plus performants depuis le début du mois.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
