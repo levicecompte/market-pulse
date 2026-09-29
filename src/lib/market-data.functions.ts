@@ -71,6 +71,7 @@ type CacheRecord = {
 };
 
 const CACHE_TTL_MS = 1000 * 60 * 5;
+const TOP_LIMIT = 20;
 let cache: CacheRecord | undefined;
 
 const SEED_ASSETS: SeedAsset[] = [
@@ -418,7 +419,7 @@ async function loadMarketData(): Promise<MarketDataResponse> {
     const candidates = await getCandidates();
     const sparkPayload = await fetchYahooSpark(candidates.map((candidate) => candidate.symbol));
     const assets = buildAssetsFromSpark(candidates, sparkPayload, startDate);
-    const averageTop100 = assets.length
+    const average = assets.length
       ? assets.reduce((total, asset) => total + asset.performance, 0) / assets.length
       : null;
 
@@ -433,8 +434,8 @@ async function loadMarketData(): Promise<MarketDataResponse> {
       assets,
       stats: {
         best: assets[0]?.performance ?? null,
-        worstTop100: assets[assets.length - 1]?.performance ?? null,
-        averageTop100,
+        worst: assets[assets.length - 1]?.performance ?? null,
+        average,
       },
     };
   } catch (error) {
