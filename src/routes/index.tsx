@@ -236,10 +236,12 @@ function Index() {
                   type="button"
                   variant="signal"
                   className="h-11 rounded-none px-3 text-xs font-black uppercase"
-                  onClick={() => refetch()}
-                  disabled={isFetching}
+                  onClick={() => void handleRefresh()}
+                  disabled={isRefreshing || isFetching}
                 >
-                  <RefreshCw className={isFetching ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
+                  <RefreshCw
+                    className={isRefreshing || isFetching ? "h-4 w-4 animate-spin" : "h-4 w-4"}
+                  />
                   Refresh
                 </Button>
               </div>
