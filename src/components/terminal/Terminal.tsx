@@ -261,7 +261,7 @@ function CandleCard() {
           ))}
         </div>
       </div>
-      <div className="h-[340px] rounded-xl bg-background/60">
+      <div className="h-[340px] rounded-xl bg-background/60 lg:h-[calc(100%-5.5rem)]">
         {isLoading ? (
           <div className="flex h-full items-center justify-center font-mono text-xs text-muted-foreground">Loading candles…</div>
         ) : (
