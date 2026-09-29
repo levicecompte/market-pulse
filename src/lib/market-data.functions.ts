@@ -455,15 +455,20 @@ async function loadMarketData(): Promise<MarketDataResponse> {
   }
 }
 
-export const getTopPerformers = createServerFn({ method: "GET" }).handler(async () => {
-  const now = Date.now();
-  if (cache && now - cache.storedAt < CACHE_TTL_MS) {
-    return cache.payload;
-  }
+export const getTopPerformers = createServerFn({ method: "GET" })
+  .inputValidator((data: unknown) => {
+    const input = (data ?? {}) as { force?: boolean };
+    return { force: input.force === true };
+  })
+  .handler(async ({ data }) => {
+    const now = Date.now();
+    if (!data.force && cache && now - cache.storedAt < CACHE_TTL_MS) {
+      return cache.payload;
+    }
 
-  const payload = await loadMarketData();
-  if (payload.status === "ok" && payload.assets.length > 0) {
-    cache = { storedAt: now, payload };
-  }
-  return payload;
-});
+    const payload = await loadMarketData();
+    if (payload.status === "ok" && payload.assets.length > 0) {
+      cache = { storedAt: now, payload };
+    }
+    return payload;
+  });
