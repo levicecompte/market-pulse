@@ -57,7 +57,7 @@ export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(performersQueryOptions),
   head: () => ({
     meta: [
-      { title: "TOP 100 PERFORMERS - MTD | Live Stocks & ETFs" },
+      { title: "TOP 20 PERFORMERS - MTD | Live Stocks & ETFs" },
       {
         name: "description",
         content:
@@ -123,7 +123,7 @@ function Index() {
 
   const marqueeItems = [
     `TOP MOVER ${formatPercent(data.stats.best)}`,
-    `AVG TOP 100 ${formatPercent(data.stats.averageTop100)}`,
+    `AVG TOP 20 ${formatPercent(data.stats.average)}`,
     `${data.trackedCount} ASSETS TRACKED`,
     `SINCE ${data.monthStartLabel.toUpperCase()}`,
     data.source.toUpperCase(),
