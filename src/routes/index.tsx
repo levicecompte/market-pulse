@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { BottomNav, CursorGlow, HeroWallpaper, MarketOverview, Navbar } from "@/components/terminal/Terminal";
 import { getTopPerformers, type AssetPerformance } from "@/lib/market-data.functions";
 
 type SearchState = {
@@ -147,8 +148,12 @@ function Index() {
     <main className="relative min-h-screen overflow-hidden text-foreground">
       <div className="pointer-events-none fixed inset-0 -z-10 market-grid" />
       <div className="pointer-events-none fixed inset-0 -z-10 dot-world" />
+      <CursorGlow />
+      <Navbar />
+      <HeroWallpaper />
+      <MarketOverview assets={data.assets} />
       <MarketMarquee items={marqueeItems} />
-      <section className="relative">
+      <section id="board" className="relative scroll-mt-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[1fr_360px] lg:items-end">
             <div>
@@ -156,9 +161,9 @@ function Index() {
                 <span className="h-2 w-2 rounded-full bg-primary neon-glow badge-pulse" />
                 TOP 20 PERFORMERS - MTD
               </div>
-              <h1 className="max-w-6xl text-balance text-gradient font-display text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl xl:text-9xl">
+              <h2 className="max-w-6xl text-balance text-gradient font-display text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl xl:text-9xl">
                 The 20 assets that closed the gap this month.
-              </h1>
+              </h2>
             </div>
             <div className="glass p-6">
               <p className="text-xl font-semibold leading-tight text-foreground md:text-2xl">
@@ -179,7 +184,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <section id="positions" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-8 pb-28 sm:px-6 lg:px-8 lg:pb-8">
         {data.status === "error" ? (
           <FailureState message={data.error ?? "Market data is temporarily unavailable."} />
         ) : (
@@ -272,6 +277,7 @@ function Index() {
           <span className="text-foreground">The right data at the right moment changes everything.</span>
         </div>
       </footer>
+      <BottomNav />
     </main>
   );
 }
@@ -279,7 +285,7 @@ function Index() {
 function MarketMarquee({ items }: { items: string[] }) {
   const loop = [...items, ...items, ...items];
   return (
-    <div className="sticky top-3 z-20 mx-3 mt-3 overflow-hidden rounded-full glass py-3 text-foreground">
+    <div className="mx-3 overflow-hidden rounded-full glass py-3 text-foreground">
       <motion.div
         className="flex w-max gap-5 whitespace-nowrap font-mono text-xs font-black uppercase"
         animate={{ x: [0, -520] }}
