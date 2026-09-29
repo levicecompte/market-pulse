@@ -29,8 +29,8 @@ export type MarketDataResponse = {
   assets: AssetPerformance[];
   stats: {
     best: number | null;
-    worstTop100: number | null;
-    averageTop100: number | null;
+    worst: number | null;
+    average: number | null;
   };
 };
 
@@ -71,6 +71,7 @@ type CacheRecord = {
 };
 
 const CACHE_TTL_MS = 1000 * 60 * 5;
+const TOP_LIMIT = 20;
 let cache: CacheRecord | undefined;
 
 const SEED_ASSETS: SeedAsset[] = [
@@ -405,7 +406,7 @@ function buildAssetsFromSpark(
     })
     .filter((asset): asset is AssetPerformance => asset !== null)
     .sort((a, b) => b.performance - a.performance)
-    .slice(0, 100)
+    .slice(0, TOP_LIMIT)
     .map((asset, index) => ({ ...asset, rank: index + 1 }));
 }
 
@@ -418,7 +419,7 @@ async function loadMarketData(): Promise<MarketDataResponse> {
     const candidates = await getCandidates();
     const sparkPayload = await fetchYahooSpark(candidates.map((candidate) => candidate.symbol));
     const assets = buildAssetsFromSpark(candidates, sparkPayload, startDate);
-    const averageTop100 = assets.length
+    const average = assets.length
       ? assets.reduce((total, asset) => total + asset.performance, 0) / assets.length
       : null;
 
@@ -433,8 +434,8 @@ async function loadMarketData(): Promise<MarketDataResponse> {
       assets,
       stats: {
         best: assets[0]?.performance ?? null,
-        worstTop100: assets[assets.length - 1]?.performance ?? null,
-        averageTop100,
+        worst: assets[assets.length - 1]?.performance ?? null,
+        average,
       },
     };
   } catch (error) {
@@ -449,7 +450,7 @@ async function loadMarketData(): Promise<MarketDataResponse> {
       rangeLabel: formatRangeLabel(startDate, now),
       trackedCount: 0,
       assets: [],
-      stats: { best: null, worstTop100: null, averageTop100: null },
+      stats: { best: null, worst: null, average: null },
     };
   }
 }

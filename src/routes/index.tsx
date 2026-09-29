@@ -57,17 +57,17 @@ export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(performersQueryOptions),
   head: () => ({
     meta: [
-      { title: "TOP 100 PERFORMERS - MTD | Live Stocks & ETFs" },
+      { title: "TOP 20 PERFORMERS - MTD | Live Stocks & ETFs" },
       {
         name: "description",
         content:
-          "Classement live des 100 actions et ETFs les plus performants depuis le début du mois.",
+          "Classement live des 20 actions et ETFs les plus performants depuis le début du mois.",
       },
-      { property: "og:title", content: "TOP 100 PERFORMERS - MTD" },
+      { property: "og:title", content: "TOP 20 PERFORMERS - MTD" },
       {
         property: "og:description",
         content:
-          "Classement live des 100 actions et ETFs les plus performants depuis le début du mois.",
+          "Classement live des 20 actions et ETFs les plus performants depuis le début du mois.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -123,7 +123,7 @@ function Index() {
 
   const marqueeItems = [
     `TOP MOVER ${formatPercent(data.stats.best)}`,
-    `AVG TOP 100 ${formatPercent(data.stats.averageTop100)}`,
+    `AVG TOP 20 ${formatPercent(data.stats.average)}`,
     `${data.trackedCount} ASSETS TRACKED`,
     `SINCE ${data.monthStartLabel.toUpperCase()}`,
     data.source.toUpperCase(),
@@ -138,10 +138,10 @@ function Index() {
             <div>
               <div className="mb-6 flex items-center gap-3 text-xs font-black uppercase text-primary">
                 <span className="h-2 w-2 bg-primary" />
-                TOP 100 PERFORMERS - MTD
+                TOP 20 PERFORMERS - MTD
               </div>
               <h1 className="max-w-6xl text-balance font-display text-6xl font-black leading-none tracking-normal sm:text-7xl md:text-8xl xl:text-9xl">
-                The 100 assets that closed the gap this month.
+                The 20 assets that closed the gap this month.
               </h1>
             </div>
             <div className="border-l border-border pl-5">
@@ -157,7 +157,7 @@ function Index() {
 
           <div className="grid border border-border md:grid-cols-3">
             <Kpi label="Best performer" value={formatPercent(data.stats.best)} />
-            <Kpi label="Worst of top 100" value={formatPercent(data.stats.worstTop100)} />
+            <Kpi label="Worst of top 20" value={formatPercent(data.stats.worst)} />
             <Kpi label="Date range" value={data.rangeLabel} />
           </div>
         </div>
@@ -525,7 +525,7 @@ function exportCsv(rows: AssetPerformance[]) {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "top-100-performers-mtd.csv";
+  anchor.download = "top-20-performers-mtd.csv";
   anchor.click();
   URL.revokeObjectURL(url);
 }
