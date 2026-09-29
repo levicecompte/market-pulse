@@ -525,7 +525,7 @@ function exportCsv(rows: AssetPerformance[]) {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "top-100-performers-mtd.csv";
+  anchor.download = "top-20-performers-mtd.csv";
   anchor.click();
   URL.revokeObjectURL(url);
 }
