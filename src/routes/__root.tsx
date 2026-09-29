@@ -78,13 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TOP 100 PERFORMERS - MTD" },
+      { title: "TOP 20 PERFORMERS - MTD" },
       {
         name: "description",
         content: "Live month-to-date ranking of top performing stocks and ETFs.",
       },
-      { name: "author", content: "TOP 100 PERFORMERS" },
-      { property: "og:title", content: "TOP 100 PERFORMERS - MTD" },
+      { name: "author", content: "TOP 20 PERFORMERS" },
+      { property: "og:title", content: "TOP 20 PERFORMERS - MTD" },
       {
         property: "og:description",
         content: "Live month-to-date ranking of top performing stocks and ETFs.",
