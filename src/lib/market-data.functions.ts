@@ -29,8 +29,8 @@ export type MarketDataResponse = {
   assets: AssetPerformance[];
   stats: {
     best: number | null;
-    worstTop100: number | null;
-    averageTop100: number | null;
+    worst: number | null;
+    average: number | null;
   };
 };
 
@@ -405,7 +405,7 @@ function buildAssetsFromSpark(
     })
     .filter((asset): asset is AssetPerformance => asset !== null)
     .sort((a, b) => b.performance - a.performance)
-    .slice(0, 100)
+    .slice(0, TOP_LIMIT)
     .map((asset, index) => ({ ...asset, rank: index + 1 }));
 }
 
