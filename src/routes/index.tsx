@@ -97,7 +97,9 @@ const compactFormatter = new Intl.NumberFormat("en-US", {
 });
 
 function Index() {
-  const { data, isFetching, refetch } = useSuspenseQuery(performersQueryOptions);
+  const { data, isFetching } = useSuspenseQuery(performersQueryOptions);
+  const queryClient = useQueryClient();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const sectors = ["all", ...Array.from(new Set(data.assets.map((asset) => asset.sector))).sort()];
@@ -114,6 +116,17 @@ function Index() {
     const matchesSector = search.sector === "all" || asset.sector === search.sector;
     return matchesTerm && matchesType && matchesSector;
   });
+
+  // Bypasses the server-side 5 min cache and fetches fresh Yahoo Finance data.
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      const fresh = await getTopPerformers({ data: { force: true } });
+      queryClient.setQueryData(performersQueryOptions.queryKey, fresh);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   const updateSearch = (updates: Partial<SearchState>) => {
     navigate({
