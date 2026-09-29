@@ -138,10 +138,10 @@ function Index() {
             <div>
               <div className="mb-6 flex items-center gap-3 text-xs font-black uppercase text-primary">
                 <span className="h-2 w-2 bg-primary" />
-                TOP 100 PERFORMERS - MTD
+                TOP 20 PERFORMERS - MTD
               </div>
               <h1 className="max-w-6xl text-balance font-display text-6xl font-black leading-none tracking-normal sm:text-7xl md:text-8xl xl:text-9xl">
-                The 100 assets that closed the gap this month.
+                The 20 assets that closed the gap this month.
               </h1>
             </div>
             <div className="border-l border-border pl-5">
@@ -157,7 +157,7 @@ function Index() {
 
           <div className="grid border border-border md:grid-cols-3">
             <Kpi label="Best performer" value={formatPercent(data.stats.best)} />
-            <Kpi label="Worst of top 100" value={formatPercent(data.stats.worstTop100)} />
+            <Kpi label="Worst of top 20" value={formatPercent(data.stats.worst)} />
             <Kpi label="Date range" value={data.rangeLabel} />
           </div>
         </div>
